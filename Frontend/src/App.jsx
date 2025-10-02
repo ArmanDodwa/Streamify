@@ -11,26 +11,24 @@ import SignUp from "./pages/SignUpPage";
 import { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "./lib/axios.js";
+import PageLoading from "./components/pageLoader.jsx";
+import {getAuthUser} from "./lib/app.js"
+import useAuthUser from "./Hooks/useAuthUser.js";
+
 
 const App = () => {
 
-  const { data: authUser, isLoading, isError } = useQuery({
-    queryKey: ['authUser'],
-    queryFn: async () => {
-      // It's generally better to pass the token via a header for authenticated requests.
-      const res = await axiosInstance.get("/auth/me");
-      return res.data;
-    },
+  const {isLoading, authUser} = useAuthUser()
 
-    retry: false,
-  });
 
-  const authUserData = authUser?.user || null;
-
+  const isAuthenticated = Boolean(authUser)
+  console.log("isAuthenticated", isAuthenticated)
+  const onBoarded = authUser?.isOnboarded
+  console.log("onBoarded",onBoarded)
   
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <PageLoading />;
   }
 
   return (
@@ -38,18 +36,26 @@ const App = () => {
       <Router>
         <Routes>
           {/* Private routes */}
-          <Route path="/" element={authUserData ? <Home /> : <Navigate to="/signUp" />} />
-          <Route path="/chat" element={authUserData ? <Chat /> : <Navigate to="/signUp" />} />
-          <Route path="/call" element={authUserData ? <Call /> : <Navigate to="/signUp" />} />
-          <Route path="/notification" element={authUserData ? <Notification /> : <Navigate to="/signUp" />} />
-          <Route path="/onboarding" element={authUserData ? <Onboarding /> : <Navigate to="/signUp" />} />
+          <Route path="/" element={
+            isAuthenticated && onBoarded ? (
+              <Home/>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"}/>
+            )
+          } />
+          <Route path="/chat" element={isAuthenticated ? <Chat /> : <Navigate to="/signUp" />} />
+          <Route path="/call" element={isAuthenticated ? <Call /> : <Navigate to="/signUp" />} />
+          <Route path="/notification" element={isAuthenticated ? <Notification /> : <Navigate to="/signUp" />} />
+          
+          <Route path="/onboarding" element={ isAuthenticated ?  (
+            !onBoarded ? <Onboarding /> : <Navigate to="/"/>
+          ) : (
+              <Navigate to="/login" />
+          ) } />
 
           {/* Public routes */}
-          <Route path="/login" element={!authUserData ? <Login /> : <Navigate to="/" />} />
-          <Route path="/signUp" element={!authUserData ? <SignUp /> : <Navigate to="/" />} />
-
-          {/* Catch-all route */}
-          <Route path="*" element={<Navigate to={authUserData ? "/" : "/signUp"} />} />
+          <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
+          <Route path="/signUp" element={!isAuthenticated ? <SignUp /> : <Navigate to="/" />} />
         </Routes>
       </Router>
       <Toaster />
