@@ -128,7 +128,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Login successful",
-      data: user,
+      data: user, token,
     });
   } catch (error) {
     console.log("Error in loginUser Controller:", error);

@@ -4,10 +4,7 @@ const { signupUser, loginUser, logOutUser, onboard } = require('../controllers/a
 const {protectRoute} = require("../middleware/auth-middleware");
 
 
-router.post('/signup', signupUser, (req, res)=>{
-    console.log("Step 2");
-  res.json({ message: "OK" });
-});
+router.post('/signup', signupUser,);
 router.post('/login', loginUser);
 router.post('/logout', logOutUser);
 
