@@ -5,9 +5,9 @@ import { HomeIcon, UsersIcon, BellIcon, StreamifyLogoIcon } from "./Icon/icon";
 
 const Sidebar = () => {
   const navItems = [
-    { name: 'Home', icon: HomeIcon, isActive: true },
-    { name: 'Friends', icon: UsersIcon, isActive: false },
-    { name: 'Notifications', icon: BellIcon, isActive: false },
+    { name: 'Home', icon: HomeIcon, isActive: true, link:"/"},
+    { name: 'Friends', icon: UsersIcon, isActive: false, link:"/home" },
+    { name: 'Notifications', icon: BellIcon, isActive: false, link:"/notification" },
   ];
 
   const CurrentUser = {
@@ -32,7 +32,7 @@ const Sidebar = () => {
             return (
               <a
                 key={item.name}
-                href="#"
+                href={item.link}
                 className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 
                   ${item.isActive 
                     ? 'bg-green-600 text-white font-semibold shadow-md' 

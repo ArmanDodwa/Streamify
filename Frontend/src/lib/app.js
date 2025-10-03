@@ -45,14 +45,32 @@ export const getRecommendedUser = async () => {
 export const getOutgoingFriendReq = async () => {
   console.log("getOutgoingFriendReq run");
   const response = await axiosInstance.get("/users/outgoing-friends-request");
-  console.log("getOutgoingFriendReq run ++++",response);
+  // console.log("getOutgoingFriendReq run ++++",response);
   return response.data;
 };
 
 export const sendFriendReqs = async(reqUser)=>{
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   console.log("sendFriendReqs run");
  
   const response = await axiosInstance.post(`/users/friends-request/${reqUser.requestedUserId}`);
+  console.log("sendFriendReqs run",response);
+  return response.data;
+}
+
+
+export const getFriendsRequests = async()=>{
+  console.log("getFriendsRequests run");
+ 
+  const response = await axiosInstance.get(`/users/friends-requests`);
+  console.log("sendFriendReqs run",response.data);
+  return response.data;
+}
+
+export const acceptReqs = async(reqUser)=>{
+  console.log("acceptReqs run");
+ 
+  const response = await axiosInstance.put(`/users/friends-request/${reqUser}/accept`);
   console.log("sendFriendReqs run",response);
   return response.data;
 }
