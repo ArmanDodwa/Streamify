@@ -10,16 +10,21 @@ export const login = async (singupData) => {
 };
 
 export const getAuthUser = async () => {
-  console.log("is run getAuthUser")
   const res = await axiosInstance.get("/auth/me");
   return res.data;
 };
 
+
 export const completonBoarding = async(userData)=>{
-  console.log("completonBoarding run")
-  console.log(userData)
+
   const response = await axiosInstance.post("/auth/onboarding", userData);
-   console.log("completonBoarding run")
-  console.log("response",response)
+  
   return response.data
+}
+
+export const logout = async()=>{
+  console.log("logout run")
+   const response = await axiosInstance.post("/auth/logout");
+   console.log(response)
+   return response.data
 }

@@ -24,6 +24,7 @@ const LoginPage = () => {
     onSuccess: ()=>{
       // toast.success("Profile Onboarding Complete");
       queryClient.invalidateQueries({queryKey:["authUser"]})
+      window.location.href = '/login'; // ✅ force navigate
     },
     onError:(err)=>{
       console.log(err)
@@ -31,7 +32,7 @@ const LoginPage = () => {
   })
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log('Form Data Submitted:', formData);
     // Here you would typically send the data to a backend API
     // alert(`Submitting with Email: ${formData.email} and Password: ${formData.password}`);

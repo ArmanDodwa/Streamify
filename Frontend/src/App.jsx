@@ -14,6 +14,7 @@ import { axiosInstance } from "./lib/axios.js";
 import PageLoading from "./components/pageLoader.jsx";
 import {getAuthUser} from "./lib/app.js"
 import useAuthUser from "./Hooks/useAuthUser.js";
+import Layout from "./components/Layout.jsx";
 
 
 const App = () => {
@@ -38,7 +39,7 @@ const App = () => {
           {/* Private routes */}
           <Route path="/" element={
             isAuthenticated && onBoarded ? (
-              <Home/>
+              <Layout><Home/></Layout>
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"}/>
             )
