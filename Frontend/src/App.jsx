@@ -39,7 +39,8 @@ const App = () => {
           {/* Private routes */}
           <Route path="/" element={
             isAuthenticated && onBoarded ? (
-              <Layout><Home/></Layout>
+              // <Layout><Home/></Layout>
+              <Home/>
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"}/>
             )

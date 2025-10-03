@@ -32,7 +32,7 @@ const LoginPage = () => {
   })
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log('Form Data Submitted:', formData);
     // Here you would typically send the data to a backend API
     // alert(`Submitting with Email: ${formData.email} and Password: ${formData.password}`);

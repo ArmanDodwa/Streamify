@@ -5,7 +5,9 @@ export const singup = async (singupData) => {
   console.log(response.data);
 };
 export const login = async (singupData) => {
+  console.log(singupData);
   const response = await axiosInstance.post("/auth/login", singupData);
+  console.log(response.data);
   console.log(response.data);
 };
 
@@ -14,17 +16,43 @@ export const getAuthUser = async () => {
   return res.data;
 };
 
-
-export const completonBoarding = async(userData)=>{
-
+export const completonBoarding = async (userData) => {
   const response = await axiosInstance.post("/auth/onboarding", userData);
-  
-  return response.data
-}
 
-export const logout = async()=>{
-  console.log("logout run")
-   const response = await axiosInstance.post("/auth/logout");
-   console.log(response)
-   return response.data
+  return response.data;
+};
+
+export const logout = async () => {
+  console.log("logout run");
+  const response = await axiosInstance.post("/auth/logout");
+  console.log(response);
+  return response.data;
+};
+
+export const getFriends = async () => {
+  console.log("getFriends run");
+  const response = await axiosInstance.get("/users/friends");
+  // console.log("getFriends run",response);
+  // console.log("getFriends run",response.data);
+  return response.data;
+};
+
+
+export const getRecommendedUser = async () => {
+  const response = await axiosInstance.get("/users");
+  return response.data;
+};
+export const getOutgoingFriendReq = async () => {
+  console.log("getOutgoingFriendReq run");
+  const response = await axiosInstance.get("/users/outgoing-friends-request");
+  console.log("getOutgoingFriendReq run ++++",response);
+  return response.data;
+};
+
+export const sendFriendReqs = async(reqUser)=>{
+  console.log("sendFriendReqs run");
+ 
+  const response = await axiosInstance.post(`/users/friends-request/${reqUser.requestedUserId}`);
+  console.log("sendFriendReqs run",response);
+  return response.data;
 }

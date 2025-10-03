@@ -10,7 +10,7 @@ const getRecommendedUsers = async (req, res) => {
       $and: [
         { _id: { $ne: currentUserId } },
         { _id: { $nin: currentUser } },
-        { isOnBoarded: true },
+        { isOnboarded: true },
       ],
     });
 
@@ -52,6 +52,7 @@ const sendFriendRequest = async (req, res) => {
         .json({ message: "You can't send a friend request to yourself." });
     }
 
+    
     // 2. Check if recipient exists
     const recipient = await User.findById(recipientId);
     if (!recipient) {
@@ -194,10 +195,12 @@ const outgoingFriendRequest = async (req, res) => {
       status: "pending",
     }).populate("recipient", "name profilePic nativeLanguage learningLanguage");
 
+    // console.log(outgoingRequests)
     return res.status(200).json({
       message: "Outgoing friend requests fetched successfully",
       data: outgoingRequests,
     });
+  
   } catch (error) {
     console.error("Error fetching outgoing friend requests:", error);
     return res.status(500).json({
