@@ -1,20 +1,29 @@
-const {StreamChat} = require("stream-chat")
+const { StreamChat } = require("stream-chat");
+require("dotenv").config();  // 👈 This must come before using process.env
 
-const streamClint = StreamChat.getInstance( process.env.STREAM_API_KEY,process.env.STREAM_API_SECRET)
 
-const upsertStreamUser = async(userData)=>{
-    try {
-       await streamClint.upsertUser([userData])
-       return userData
-    } catch (error) {
-        console.log("Error upserting stream user",error)
-    }
-}
+console.log(process.env.STREAM_API_KEY,
+  process.env.STREAM_API_SECRET
+)
+
+// ✅ Make sure both API key and secret are passed here
+const streamClient = StreamChat.getInstance(
+  process.env.STREAM_API_KEY,
+  process.env.STREAM_API_SECRET
+);
+
+const upsertStreamUser = async (userData) => {
+  try {
+    await streamClient.upsertUser(userData); // ✅ object, not array
+    return userData;
+  } catch (error) {
+    console.error("Error upserting stream user:", error);
+  }
+};
 
 const generateStreamToken = (userId) => {
   try {
-    const userIdStr = userId.toString();
-    const token = streamClient.createToken(userIdStr);
+    const token = streamClient.createToken(userId.toString());
     return token;
   } catch (error) {
     console.error("Error generating stream token:", error);
@@ -22,5 +31,4 @@ const generateStreamToken = (userId) => {
   }
 };
 
-
-module.exports= {upsertStreamUser, generateStreamToken}
+module.exports = { upsertStreamUser, generateStreamToken };

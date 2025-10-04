@@ -10,6 +10,9 @@ import {
   sendFriendReqs,
 } from "../lib/app";
 import useAuthUser from "../Hooks/useAuthUser";
+import { Link } from "react-router-dom";
+
+
 
 export default function App() {
   const { isLoading: authLoading, authUser } = useAuthUser();
@@ -139,9 +142,11 @@ export default function App() {
                     </span>
                   </div>
 
-                  <button className="mt-2 w-full bg-gray-600 text-white font-medium py-3 rounded-xl hover:bg-gray-700 transition-colors shadow-lg">
-                    Message
-                  </button>
+                  <Link to={`/chat/${fr._id}`}>
+                    <button className="mt-2 w-full bg-gray-600 text-white font-medium py-3 rounded-xl hover:bg-gray-700 transition-colors shadow-lg">
+                      Message
+                    </button>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -184,6 +189,7 @@ export default function App() {
                       }
                       alt={user.name}
                     />
+                    
                     <div>
                       <h3 className="text-xl font-semibold text-white">
                         {user.name}

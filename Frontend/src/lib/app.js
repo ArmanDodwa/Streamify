@@ -74,3 +74,11 @@ export const acceptReqs = async(reqUser)=>{
   console.log("sendFriendReqs run",response);
   return response.data;
 }
+
+export const getStreamToken = async(reqUser)=>{
+  console.log("getStreamToken run");
+ 
+  const response = await axiosInstance.get(`/chat/token`);
+  console.log("getStreamToken answer",response);
+  return response.data;
+}

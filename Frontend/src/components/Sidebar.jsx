@@ -1,9 +1,13 @@
 // Sidebar.jsx
 import React from 'react';
 import { HomeIcon, UsersIcon, BellIcon, StreamifyLogoIcon } from "./Icon/icon";
-
+import useAuthUser from "../Hooks/useAuthUser"
 
 const Sidebar = () => {
+   const { authUser } = useAuthUser();
+  
+  console.log("++++++++++++++++++++++///////////+++++++++++",authUser)
+
   const navItems = [
     { name: 'Home', icon: HomeIcon, isActive: true, link:"/"},
     { name: 'Friends', icon: UsersIcon, isActive: false, link:"/home" },
@@ -52,10 +56,10 @@ const Sidebar = () => {
         <div className="flex items-center gap-3 cursor-pointer p-2 rounded-xl hover:bg-gray-800 transition-colors">
           <img
             className="w-10 h-10 rounded-full object-cover border-2 border-gray-700"
-            src={CurrentUser.avatarUrl}
-            alt={`${CurrentUser.name} profile`}
+            src={authUser.profilePic}
+            alt={`${authUser.name} profile`}
           />
-          <span className="text-gray-200 font-medium">{CurrentUser.name}</span>
+          <span className="text-gray-200 font-medium">{authUser.name}</span>
         </div>
       </div>
     </aside>
